@@ -8,10 +8,10 @@ import sched
 import time
 from pygame import mixer
 
-HOST = 'ftp.dlptest.com'
-PORT = 12121
-USER = 'dlpuser@dlptest.com'
-PwD = 'fLDScD4Ynth0p4OJ6bW6qCxjh'
+HOST = input("Host\n")  # 'ftp.dlptest.com'
+PORT = int(input("Port(DEFAULT: 21)\n"))  # 12121
+USER = input("Username\n")  # 'dlpuser@dlptest.com'
+PwD = input("Password\n")  # 'fLDScD4Ynth0p4OJ6bW6qCxjh'
 SOUND_URL = 's.mp3'
 mixer.init()
 mixer.music.load(SOUND_URL)
@@ -21,7 +21,7 @@ def connect():
     ftps = ftp.FTP_TLS()
     # ftps.ssl_version = ssl.PROTOCOL_TLSv1_2
     ftps.debugging = 2
-    ftps.connect(HOST)  # YOU CAN ADD SPECIFIC PORT
+    ftps.connect(HOST, PORT)  # YOU CAN ADD SPECIFIC PORT
     ftps.login(USER, PwD)
     print("Connection established!")
     return ftps
@@ -62,11 +62,11 @@ s = sched.scheduler(time.time, time.sleep)
 
 def repeat(sc):
     check()
-    s.enter(5, 1, repeat, (sc,))
+    s.enter(30, 1, repeat, (sc,))
 
 
 check(True)
-s.enter(5, 1, repeat, (s,))
+s.enter(30, 1, repeat, (s,))
 s.run()
 
 # run_as_admin()
